@@ -38,7 +38,17 @@ const Form: React.FC<Props> = (props) => {
   }, [form]);
 
   return (
-    <div className={styles.Form}>
+    <div
+      className={styles.Form}
+      style={
+        (!form.name.length && {
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }) ||
+        {}
+      }
+    >
       <div className={styles.Form__Head}>
         <img src={icon} className={styles.Icon} />
         <div>
