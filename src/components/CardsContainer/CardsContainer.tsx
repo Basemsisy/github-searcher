@@ -24,7 +24,7 @@ const CardsContainer: React.FC<Props> = () => {
   return (
     <div className={styles.CardsContainer}>
       {items.map((item: any) => {
-        if (item.type == "User") {
+        if (item.type === "User" || item.type === "Organization") {
           return <UserCard key={item.id} user={item} />;
         } else {
           return <RepoCard repo={item} />;
