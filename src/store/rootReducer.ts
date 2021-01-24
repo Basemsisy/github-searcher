@@ -5,14 +5,14 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import mainReducer from "./main/reducer";
-const configureStore = () => {
-  const { requestsReducer, requestsMiddleware } = handleRequests({
-    driver: createDriver(httpDriver),
-  });
 
-  const reducers = combineReducers({
-    requests: requestsReducer,
-    main: mainReducer,
+const reducers = combineReducers({
+  main: mainReducer,
+});
+
+const configureStore = () => {
+  const { requestsMiddleware } = handleRequests({
+    driver: createDriver(httpDriver),
   });
 
   const persistConfig = {
@@ -22,12 +22,17 @@ const configureStore = () => {
   };
 
   const persistedReducer = persistReducer(persistConfig, reducers);
+
   const store = createStore(
     persistedReducer,
     applyMiddleware(...requestsMiddleware)
   );
+
   let persistor = persistStore(store);
+
   return { store, persistor };
 };
+
+export type RootState = ReturnType<typeof reducers>;
 
 export default configureStore;
