@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
         ...state,
         items: null,
         isLoading: false,
-        error: action.response,
+        error: action.error.response.data.message,
       };
     case T.RESET_STORE:
       return initialState;
